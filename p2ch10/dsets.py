@@ -10,7 +10,6 @@ import SimpleITK as sitk
 import numpy as np
 
 import torch
-import torch.cuda
 from torch.utils.data import Dataset
 
 from util.disk import getCache

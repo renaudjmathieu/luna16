@@ -12,7 +12,6 @@ import SimpleITK as sitk
 import numpy as np
 
 import torch
-import torch.cuda
 import torch.nn.functional as F
 from torch.utils.data import Dataset
 

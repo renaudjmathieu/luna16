@@ -115,7 +115,8 @@ class LunaTrainingApp:
             self.augmentation_dict['noise'] = 25.0
 
         self.use_cuda = torch.cuda.is_available()
-        self.device = torch.device("cuda" if self.use_cuda else "cpu")
+        self.use_mps = torch.backends.mps.is_available() and torch.backends.mps.is_built()
+        self.device = torch.device("cuda" if self.use_cuda else "mps" if self.use_mps else "cpu")
 
         self.model = self.initModel()
         self.optimizer = self.initOptimizer()
@@ -127,6 +128,9 @@ class LunaTrainingApp:
             log.info("Using CUDA; {} devices.".format(torch.cuda.device_count()))
             if torch.cuda.device_count() > 1:
                 model = nn.DataParallel(model)
+            model = model.to(self.device)
+        elif self.use_mps:
+            log.info("Using MPS.")
             model = model.to(self.device)
         return model
 
@@ -150,7 +154,7 @@ class LunaTrainingApp:
             train_ds,
             batch_size=batch_size,
             num_workers=self.cli_args.num_workers,
-            pin_memory=self.use_cuda,
+            pin_memory=self.use_cuda or self.use_mps,
         )
 
         return train_dl
@@ -169,7 +173,7 @@ class LunaTrainingApp:
             val_ds,
             batch_size=batch_size,
             num_workers=self.cli_args.num_workers,
-            pin_memory=self.use_cuda,
+            pin_memory=self.use_cuda or self.use_mps,
         )
 
         return val_dl
