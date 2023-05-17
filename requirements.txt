@@ -3,3 +3,4 @@ matplotlib
 SimpleITK
 torch
 diskcache
+cassandra-driver
