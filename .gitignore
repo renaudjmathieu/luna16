@@ -1,0 +1,12 @@
+
+data/cache/*
+data/LUNA16/*
+
+*/__pycache__/*
+*/.ipynb_checkpoints/*
+*/.idea/*
+*/.git/*
+*/.gitignore
+*/.DS
+
+.DS_Store
