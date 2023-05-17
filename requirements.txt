@@ -4,3 +4,4 @@ SimpleITK
 torch
 diskcache
 cassandra-driver
+tensorboard
